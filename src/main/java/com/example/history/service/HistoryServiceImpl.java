@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -43,5 +44,12 @@ public class HistoryServiceImpl implements HistoryService {
 
         String json = new Gson().toJson(list);
         return json;
+    }
+
+    @Override
+    public ResponseEntity<String> listTwo(String sequence, String content, String event, Date start, Date end) {
+        List<History> list = repository.findBySequenceAndContentAndEventAndRegisterBetween(sequence, content, event, start, end);
+        String json = new Gson().toJson(list);
+        return ResponseEntity.ok(json);
     }
 }
